@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.job_title }} - SOLACED Jobs{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Back Button -->
+    <div class="col-12 mb-3">
+        <a href="{% url 'jobs:job_list' %}" class="btn btn-outline-warning">
+            <i class="fas fa-arrow-left me-2"></i>Back to Jobs
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Job Details Card -->
+    <div class="col-lg-8">
+        <div class="card glass-effect h-100">
+            <div class="card-body">
+                <!-- Job Header -->
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <h1 class="text-warning fw-bold mb-2">
+                            <i class="fas fa-briefcase me-2"></i>{{ job.job_title }}
+                        </h1>
+                        <div class="d-flex align-items-center text-muted">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            <span>{{ job.location }}</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <div class="badge bg-success rounded-pill px-3 py-2">
+                            <i class="fas fa-dollar-sign me-1"></i>Open Position
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salary Information -->
+                <div class="salary-highlight mb-4 p-4 rounded-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="text-success mb-2">
+                                <i class="fas fa-money-bill-wave me-2"></i>Salary Range
+                            </h5>
+                            <div class="fs-3 fw-bold text-success">
+                                ₱{{ job.min_offer|floatformat:0 }} - ₱{{ job.max_offer|floatformat:0 }}
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <small class="text-muted">Per month</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Description -->
+                <div class="mb-4">
+                    <h4 class="text-warning mb-3">
+                        <i class="fas fa-file-alt me-2"></i>Job Description
+                    </h4>
+                    <div class="job-description p-3 rounded-3">
+                        {{ job.job_description|linebreaks }}
+                    </div>
+                </div>
+
+                <!-- Job Requirements (if you have them) -->
+                <div class="mb-4">
+                    <h4 class="text-warning mb-3">
+                        <i class="fas fa-list-check me-2"></i>What We're Looking For
+                    </h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Passionate and motivated individual</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Strong communication skills</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Team player with collaborative mindset</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Relevant experience preferred</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Form Card -->
+    <div class="col-lg-4">
+        <div class="sticky-top" style="top: 100px;">
+            <div class="card glass-effect">
+                <div class="card-header bg-transparent border-bottom border-warning">
+                    <h5 class="text-warning mb-0">
+                        <i class="fas fa-paper-plane me-2"></i>Apply for this Job
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'jobs:apply_job' job.pk %}">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <div class="application-info p-3 rounded-3 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-user text-warning me-2"></i>
+                                    <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+                                </div>
+                                <div class="d-flex align-items-center text-muted">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    <small>{{ user.email }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-light">
+                                <i class="fas fa-file-upload me-2"></i>Upload Resume
+                            </label>
+                            {{ form.resume }}
+                            <small class="form-text text-muted mt-1">
+                                Accepted formats: PDF, DOC, DOCX (Max 5MB)
+                            </small>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning btn-lg rounded-pill fw-bold">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Application
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-shield-alt me-1"></i>
+                                Your information is secure with us
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Tips Card -->
+            <div class="card glass-effect mt-4">
+                <div class="card-header bg-transparent border-bottom border-warning">
+                    <h6 class="text-warning mb-0">
+                        <i class="fas fa-lightbulb me-2"></i>Application Tips
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Keep your resume updated
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Highlight relevant experience
+                        </li>
+                        <li class="mb-0">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Tailor your application
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.salary-highlight {
+    background: linear-gradient(135deg, rgba(74, 124, 89, 0.1), rgba(74, 124, 89, 0.05));
+    border: 1px solid rgba(74, 124, 89, 0.3);
+}
+
+.job-description {
+    background: rgba(27, 46, 27, 0.5);
+    border-left: 3px solid var(--sage-green);
+    line-height: 1.6;
+}
+
+.application-info {
+    background: rgba(27, 46, 27, 0.5);
+    border: 1px solid rgba(156, 175, 136, 0.2);
+}
+
+.form-control {
+    border-radius: 0.5rem;
+}
+
+@media (max-width: 992px) {
+    .sticky-top {
+        position: relative !important;
+        top: auto !important;
+    }
+}
+</style>
+{% endblock %}

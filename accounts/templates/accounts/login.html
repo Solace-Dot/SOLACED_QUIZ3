@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In - SOLACED Jobs{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+        <div class="card glass-effect shadow-lg">
+            <div class="card-body p-5">
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <div class="mb-3">
+                        <i class="fas fa-sign-in-alt text-warning" style="font-size: 3rem;"></i>
+                    </div>
+                    <h2 class="text-warning fw-bold mb-2">Welcome Back</h2>
+                    <p class="text-muted">Sign in to continue your career journey</p>
+                </div>
+
+                <!-- Login Form -->
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label text-light">
+                            <i class="fas fa-envelope me-2"></i>Email Address
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-transparent border-end-0 text-warning">
+                                <i class="fas fa-at"></i>
+                            </span>
+                            {{ form.username }}
+                        </div>
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">
+                                <i class="fas fa-exclamation-circle me-1"></i>
+                                {{ form.username.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-4">
+                        <label for="{{ form.password.id_for_label }}" class="form-label text-light">
+                            <i class="fas fa-lock me-2"></i>Password
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-transparent border-end-0 text-warning">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            {{ form.password }}
+                            <button class="btn btn-outline-warning" type="button" onclick="togglePassword('{{ form.password.id_for_label }}', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="text-danger small mt-1">
+                                <i class="fas fa-exclamation-circle me-1"></i>
+                                {{ form.password.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <label class="form-check-label text-muted small" for="rememberMe">
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a href="#" class="text-warning text-decoration-none small">
+                                Forgot password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-warning btn-lg text-dark fw-bold rounded-pill shadow-sm">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </button>
+                    </div>
+
+                    <!-- Register Link -->
+                    <div class="text-center">
+                        <p class="text-muted mb-0">
+                            Don't have an account? 
+                            <a href="{% url 'accounts:register' %}" class="text-warning fw-semibold text-decoration-none">
+                                <i class="fas fa-user-plus me-1"></i>Create Account
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row mt-4 g-3">
+            <div class="col-4">
+                <div class="text-center">
+                    <div class="text-warning fw-bold" style="font-size: 1.5rem;">1000+</div>
+                    <p class="small text-muted mb-0">Jobs Posted</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-center">
+                    <div class="text-warning fw-bold" style="font-size: 1.5rem;">500+</div>
+                    <p class="small text-muted mb-0">Happy Users</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-center">
+                    <div class="text-warning fw-bold" style="font-size: 1.5rem;">98%</div>
+                    <p class="small text-muted mb-0">Success Rate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePassword(fieldId, button) {
+    const field = document.getElementById(fieldId);
+    const icon = button.querySelector('i');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+</script>
+
+<style>
+.input-group .form-control {
+    border-left: none;
+    border-right: none;
+}
+
+.input-group .input-group-text {
+    border-right: none;
+}
+
+.input-group .btn {
+    border-left: none;
+}
+
+.form-control:focus + .btn {
+    border-color: var(--sage-green);
+}
+
+.form-check-input:checked {
+    background-color: var(--sage-green);
+    border-color: var(--sage-green);
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: 2rem !important;
+    }
+}
+</style>
+{% endblock %}

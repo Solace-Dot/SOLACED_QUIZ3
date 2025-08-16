@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SOLACED Jobs{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #0d0d0d;
+            --dark-green: #1b2e1b;
+            --sage-green: #9caf88;
+            --creamy-white: #f8f6f0;
+            --accent-sage: #7a8471;
+            --text-light: #f8f6f0;
+            --text-muted: #a8a896;
+            --success-green: #4a7c59;
+            --hover-green: #2d4a2d;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-green) 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: rgba(13, 13, 13, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(156, 175, 136, 0.2);
+        }
+
+        .navbar-brand {
+            color: var(--sage-green) !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--sage-green) !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--sage-green), var(--success-green));
+            border: none;
+            color: var(--creamy-white);
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(156, 175, 136, 0.3);
+            color: var(--creamy-white);
+            background: linear-gradient(45deg, var(--success-green), var(--sage-green));
+        }
+
+        .card {
+            background: rgba(27, 46, 27, 0.8) !important;
+            border: 1px solid rgba(156, 175, 136, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(156, 175, 136, 0.2);
+        }
+
+        .form-control {
+            background: rgba(27, 46, 27, 0.7);
+            border: 1px solid rgba(156, 175, 136, 0.3);
+            color: var(--text-light);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(27, 46, 27, 0.9);
+            border-color: var(--sage-green);
+            box-shadow: 0 0 15px rgba(156, 175, 136, 0.3);
+            color: var(--text-light);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        .text-warning {
+            color: var(--sage-green) !important;
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, var(--sage-green), var(--success-green));
+            border: none;
+            color: var(--creamy-white);
+            font-weight: 600;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(45deg, var(--success-green), var(--sage-green));
+            color: var(--creamy-white);
+        }
+
+        .alert {
+            background: rgba(27, 46, 27, 0.9);
+            border: 1px solid rgba(156, 175, 136, 0.3);
+            color: var(--text-light);
+        }
+
+        .footer {
+            background: rgba(13, 13, 13, 0.95);
+            border-top: 1px solid rgba(156, 175, 136, 0.2);
+            margin-top: auto;
+        }
+
+        .glass-effect {
+            background: rgba(27, 46, 27, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(156, 175, 136, 0.2);
+        }
+
+        .text-success {
+            color: var(--success-green) !important;
+        }
+
+        .bg-success {
+            background-color: var(--success-green) !important;
+        }
+
+        .btn-outline-warning {
+            border-color: var(--sage-green);
+            color: var(--sage-green);
+        }
+
+        .btn-outline-warning:hover {
+            background-color: var(--sage-green);
+            border-color: var(--sage-green);
+            color: var(--creamy-white);
+        }
+
+        .input-group-text {
+            background: rgba(27, 46, 27, 0.7);
+            border-color: rgba(156, 175, 136, 0.3);
+            color: var(--sage-green);
+        }
+
+        .badge {
+            background: var(--sage-green) !important;
+            color: var(--creamy-white) !important;
+        }
+
+        .badge.bg-success {
+            background: var(--success-green) !important;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'jobs:job_list' %}">
+                <i class="fas fa-briefcase me-2"></i>SOLACED Jobs
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'jobs:job_list' %}">
+                            <i class="fas fa-home me-1"></i>Jobs
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <span class="nav-link">
+                                <i class="fas fa-user me-1"></i>Welcome, {{ user.first_name|default:user.email }}
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:logout' %}">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:login' %}">
+                                <i class="fas fa-sign-in-alt me-1"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:register' %}">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1" style="margin-top: 80px; padding-bottom: 60px;">
+        <div class="container py-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>{{ message }}
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer text-center py-3">
+        <div class="container">
+            <span class="text-muted">
+                <i class="fas fa-heart text-danger"></i>
+                Made with love by SOLACED Team © 2025
+            </span>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
